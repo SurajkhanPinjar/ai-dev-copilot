@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         xsi:schemaLocation="https://maven.apache.org/POM/4.0.0
          https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
@@ -12,19 +12,35 @@
 
     <packaging>pom</packaging>
 
-    <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <name>AI Dev Copilot</name>
+    <description>AI-powered IntelliJ Developer Assistant</description>
+
+    <!-- ========================= -->
+    <!-- Modules                   -->
+    <!-- ========================= -->
 
     <modules>
         <module>shared</module>
         <module>ai-core</module>
         <module>rag-engine</module>
+        <module>infrastructure</module>
         <module>ai-backend</module>
         <module>intellij-plugin</module>
-        <module>infrastructure</module>
     </modules>
+
+    <!-- ========================= -->
+    <!-- Common Properties         -->
+    <!-- ========================= -->
+
+    <properties>
+
+        <java.version>17</java.version>
+
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    </properties>
 
 </project>
