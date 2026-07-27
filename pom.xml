@@ -2,22 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://maven.apache.org/POM/4.0.0
-         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.aidevcopilot</groupId>
     <artifactId>ai-dev-copilot</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-
     <packaging>pom</packaging>
 
     <name>AI Dev Copilot</name>
     <description>AI-powered IntelliJ Developer Assistant</description>
 
-    <!-- ========================= -->
-    <!-- Modules                   -->
-    <!-- ========================= -->
+    <!-- ===================================================== -->
+    <!-- Modules                                               -->
+    <!-- ===================================================== -->
 
     <modules>
         <module>shared</module>
@@ -28,19 +27,112 @@
         <module>intellij-plugin</module>
     </modules>
 
-    <!-- ========================= -->
-    <!-- Common Properties         -->
-    <!-- ========================= -->
+    <!-- ===================================================== -->
+    <!-- Common Properties                                     -->
+    <!-- ===================================================== -->
 
     <properties>
 
+        <!-- Java -->
         <java.version>17</java.version>
-
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+        <!-- Spring -->
+        <spring.boot.version>3.5.4</spring.boot.version>
+
+        <!-- AI -->
+        <langchain4j.version>1.3.0</langchain4j.version>
+
+        <!-- PDF -->
+        <pdfbox.version>3.0.5</pdfbox.version>
+
+        <!-- Jackson -->
+        <jackson.version>2.20.0</jackson.version>
+
+        <!-- Lombok -->
+        <lombok.version>1.18.38</lombok.version>
+
+        <!-- Logging -->
+        <slf4j.version>2.0.17</slf4j.version>
+
+        <!-- Testing -->
+        <junit.version>5.13.4</junit.version>
+        <mockito.version>5.19.0</mockito.version>
+
+        <!-- Maven -->
+        <maven.compiler.plugin.version>3.14.0</maven.compiler.plugin.version>
+
     </properties>
+
+    <!-- ===================================================== -->
+    <!-- Dependency Management                                 -->
+    <!-- ===================================================== -->
+
+    <dependencyManagement>
+
+        <dependencies>
+
+            <!-- Spring Boot BOM -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- LangChain4j -->
+            <dependency>
+                <groupId>dev.langchain4j</groupId>
+                <artifactId>langchain4j</artifactId>
+                <version>${langchain4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>dev.langchain4j</groupId>
+                <artifactId>langchain4j-ollama</artifactId>
+                <version>${langchain4j.version}</version>
+            </dependency>
+
+            <!-- PDFBox -->
+            <dependency>
+                <groupId>org.apache.pdfbox</groupId>
+                <artifactId>pdfbox</artifactId>
+                <version>${pdfbox.version}</version>
+            </dependency>
+
+        </dependencies>
+
+    </dependencyManagement>
+
+    <!-- ===================================================== -->
+    <!-- Plugin Management                                     -->
+    <!-- ===================================================== -->
+
+    <build>
+
+        <pluginManagement>
+
+            <plugins>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.plugin.version}</version>
+
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+
+                </plugin>
+
+            </plugins>
+
+        </pluginManagement>
+
+    </build>
 
 </project>
