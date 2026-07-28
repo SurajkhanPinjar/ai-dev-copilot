@@ -1,8 +1,12 @@
 package io.aidevcopilot.rag.orchestrator;
 
-import org.springframework.stereotype.Service;
+import io.aidevcopilot.rag.model.Document;
+import io.aidevcopilot.rag.model.DocumentChunk;
 
-@Service
-public class DocumentOrchestrator {
+import java.util.List;
+
+public interface DocumentOrchestrator {
+
+    List<DocumentChunk> process(Document document);
 
 }

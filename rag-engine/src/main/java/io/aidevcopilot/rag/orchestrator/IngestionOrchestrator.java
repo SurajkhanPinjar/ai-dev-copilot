@@ -1,8 +1,9 @@
 package io.aidevcopilot.rag.orchestrator;
 
-import org.springframework.stereotype.Service;
+import io.aidevcopilot.rag.model.Document;
 
-@Service
-public class IngestionOrchestrator {
+public interface IngestionOrchestrator {
+
+    void ingest(Document document);
 
 }

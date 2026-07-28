@@ -1,17 +1,28 @@
 package io.aidevcopilot.rag.retriever;
 
-import io.aidevcopilot.rag.model.SearchRequest;
+import io.aidevcopilot.rag.model.EmbeddingChunk;
 import io.aidevcopilot.rag.model.SearchResult;
+import io.aidevcopilot.rag.vectorstore.VectorStore;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
+@RequiredArgsConstructor
 public class SimilarityRetriever implements Retriever {
 
-    @Override
-    public List<SearchResult> retrieve(SearchRequest request) {
-        throw new UnsupportedOperationException("Similarity retrieval not implemented yet.");
-    }
+    private final VectorStore vectorStore;
 
+    @Override
+    public List<SearchResult> retrieve(
+            float[] queryEmbedding,
+            int topK) {
+
+        return vectorStore.searchSimilar(
+                queryEmbedding,
+                topK
+        );
+    }
 }

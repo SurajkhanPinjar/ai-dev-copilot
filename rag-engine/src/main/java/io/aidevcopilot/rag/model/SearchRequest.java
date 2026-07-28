@@ -1,12 +1,21 @@
 package io.aidevcopilot.rag.model;
 
-public record SearchRequest(
+import lombok.Builder;
+import lombok.Data;
 
-        String query,
+@Data
+@Builder
+public class SearchRequest {
 
-        Integer topK,
+    /**
+     * User's natural language query.
+     */
+    private String query;
 
-        Double minScore
+    /**
+     * Number of chunks to retrieve.
+     */
+    @Builder.Default
+    private Integer topK = 5;
 
-) {
 }

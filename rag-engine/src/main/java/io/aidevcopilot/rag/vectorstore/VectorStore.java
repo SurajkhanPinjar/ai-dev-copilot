@@ -1,15 +1,19 @@
 package io.aidevcopilot.rag.vectorstore;
 
-import io.aidevcopilot.rag.model.EmbeddingVector;
-import io.aidevcopilot.rag.model.SearchRequest;
+import io.aidevcopilot.rag.model.EmbeddingChunk;
 import io.aidevcopilot.rag.model.SearchResult;
 
 import java.util.List;
 
 public interface VectorStore {
 
-    void save(List<EmbeddingVector> embeddings);
+    void save(EmbeddingChunk chunk);
 
-    List<SearchResult> search(SearchRequest request);
+    void saveAll(List<EmbeddingChunk> chunks);
+
+    void deleteByDocumentId(String documentId);
+
+    List<SearchResult> searchSimilar(float[] queryEmbedding,
+                                     int topK);
 
 }

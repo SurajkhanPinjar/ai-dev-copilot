@@ -1,7 +1,7 @@
 package io.aidevcopilot.rag.embedding;
 
 import io.aidevcopilot.rag.model.DocumentChunk;
-import io.aidevcopilot.rag.model.EmbeddingVector;
+import io.aidevcopilot.rag.model.EmbeddingChunk;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,8 +10,16 @@ import java.util.List;
 public class HuggingFaceEmbeddingService implements EmbeddingService {
 
     @Override
-    public List<EmbeddingVector> embed(List<DocumentChunk> chunks) {
-        throw new UnsupportedOperationException("Hugging Face embedding not implemented yet.");
+    public List<EmbeddingChunk> embed(List<DocumentChunk> chunks) {
+        throw new UnsupportedOperationException(
+                "Hugging Face document embedding is not implemented yet."
+        );
     }
 
+    @Override
+    public float[] embedQuery(String query) {
+        throw new UnsupportedOperationException(
+                "Hugging Face query embedding is not implemented yet."
+        );
+    }
 }

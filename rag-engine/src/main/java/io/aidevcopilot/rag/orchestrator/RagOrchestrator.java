@@ -1,8 +1,12 @@
 package io.aidevcopilot.rag.orchestrator;
 
-import org.springframework.stereotype.Service;
+import io.aidevcopilot.rag.model.SearchRequest;
+import io.aidevcopilot.rag.model.SearchResult;
 
-@Service
-public class RagOrchestrator {
+import java.util.List;
+
+public interface RagOrchestrator {
+
+    List<SearchResult> retrieve(SearchRequest request);
 
 }

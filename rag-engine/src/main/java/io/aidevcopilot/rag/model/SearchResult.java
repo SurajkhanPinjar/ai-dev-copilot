@@ -1,10 +1,23 @@
 package io.aidevcopilot.rag.model;
 
-public record SearchResult(
+import lombok.Builder;
+import lombok.Data;
 
-        DocumentChunk chunk,
+@Data
+@Builder
+public class SearchResult {
 
-        Double score
+    private String documentId;
 
-) {
+    private Integer pageNumber;
+
+    private Integer chunkIndex;
+
+    private String content;
+
+    /**
+     * Similarity score.
+     */
+    private Double score;
+
 }

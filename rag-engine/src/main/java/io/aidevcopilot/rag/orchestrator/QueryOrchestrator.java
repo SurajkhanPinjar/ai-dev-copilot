@@ -1,8 +1,13 @@
 package io.aidevcopilot.rag.orchestrator;
 
-import org.springframework.stereotype.Service;
+import io.aidevcopilot.rag.model.EmbeddingChunk;
+import io.aidevcopilot.rag.model.SearchRequest;
+import io.aidevcopilot.rag.model.SearchResult;
 
-@Service
-public class QueryOrchestrator {
+import java.util.List;
+
+public interface QueryOrchestrator {
+
+    List<SearchResult> search(SearchRequest request);
 
 }

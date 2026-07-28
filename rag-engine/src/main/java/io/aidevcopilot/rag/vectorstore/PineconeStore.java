@@ -8,16 +8,14 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class PineconeStore implements VectorStore {
+public class PineconeStore  {
 
-    @Override
-    public void save(List<EmbeddingVector> embeddings) {
-        throw new UnsupportedOperationException("Pinecone store not implemented yet.");
-    }
-
-    @Override
-    public List<SearchResult> search(SearchRequest request) {
-        throw new UnsupportedOperationException("Pinecone search not implemented yet.");
-    }
+//    public void save(List<EmbeddingVector> embeddings) {
+//        throw new UnsupportedOperationException("Pinecone store not implemented yet.");
+//    }
+//
+//    public List<SearchResult> search(SearchRequest request) {
+//        throw new UnsupportedOperationException("Pinecone search not implemented yet.");
+//    }
 
 }

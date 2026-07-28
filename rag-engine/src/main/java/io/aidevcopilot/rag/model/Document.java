@@ -1,5 +1,7 @@
 package io.aidevcopilot.rag.model;
 
+import lombok.Data;
+
 import java.time.Instant;
 
 public record Document(

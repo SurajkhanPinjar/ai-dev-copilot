@@ -3,9 +3,11 @@ package io.aidevcopilot.rag.model;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder
-public class DocumentChunk {
+public class EmbeddingChunk {
 
     private String documentId;
 
@@ -14,5 +16,7 @@ public class DocumentChunk {
     private Integer chunkIndex;
 
     private String content;
+
+    private float[] embedding;
 
 }

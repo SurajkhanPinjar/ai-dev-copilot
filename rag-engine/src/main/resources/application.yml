@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ragdb
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+rag:
+  vector:
+    dimensions: 768
+
+ollama:
+  base-url: http://localhost:11434
+  embedding-model: nomic-embed-text
