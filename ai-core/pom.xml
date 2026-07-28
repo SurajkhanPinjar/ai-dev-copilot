@@ -16,11 +16,51 @@
     <artifactId>ai-core</artifactId>
 
     <name>AI Core</name>
+
     <dependencies>
+
+        <!-- ===================================================== -->
+        <!-- Internal Modules                                      -->
+        <!-- ===================================================== -->
+
+        <dependency>
+            <groupId>io.aidevcopilot</groupId>
+            <artifactId>shared</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.aidevcopilot</groupId>
+            <artifactId>rag-engine</artifactId>
+        </dependency>
+
+        <!-- ===================================================== -->
+        <!-- Spring                                                -->
+        <!-- ===================================================== -->
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
         </dependency>
+
+        <!-- ===================================================== -->
+        <!-- Lombok                                                -->
+        <!-- ===================================================== -->
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- ===================================================== -->
+        <!-- Testing                                               -->
+        <!-- ===================================================== -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 </project>

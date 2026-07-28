@@ -30,11 +30,6 @@
 
         <dependency>
             <groupId>io.aidevcopilot</groupId>
-            <artifactId>ai-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.aidevcopilot</groupId>
             <artifactId>infrastructure</artifactId>
         </dependency>
 

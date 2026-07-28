@@ -58,6 +58,7 @@ public enum AITask {
      */
     GENERATE_API,
 
+    RAG_CHAT,
     /**
      * Generate Spring Boot service layer.
      */

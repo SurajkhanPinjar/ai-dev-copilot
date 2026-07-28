@@ -8,10 +8,12 @@ import io.aidevcopilot.rag.orchestrator.DocumentOrchestrator;
 import io.aidevcopilot.rag.orchestrator.IngestionOrchestrator;
 import io.aidevcopilot.rag.vectorstore.VectorStore;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class IngestionOrchestratorImpl
@@ -24,12 +26,20 @@ public class IngestionOrchestratorImpl
     @Override
     public void ingest(Document document) {
 
+        log.info("Starting ingestion for document {}", document.id());
+
         List<DocumentChunk> chunks =
                 documentOrchestrator.process(document);
 
-        List<EmbeddingChunk> embeddings =
+        List<EmbeddingChunk> embeddingChunks =
                 embeddingService.embed(chunks);
 
-        vectorStore.saveAll(embeddings);
+        vectorStore.saveAll(embeddingChunks);
+
+        log.info(
+                "Successfully ingested document {} with {} chunks",
+                document.id(),
+                embeddingChunks.size()
+        );
     }
 }

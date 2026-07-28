@@ -9,7 +9,8 @@ public record PromptContext(
 
         AITask task,
 
-        String input
+        String input,
 
+        String context
 ) {
 }
