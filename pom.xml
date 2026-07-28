@@ -74,7 +74,10 @@
 
         <dependencies>
 
-            <!-- Spring Boot BOM -->
+            <!-- ===================================================== -->
+            <!-- Spring Boot BOM                                       -->
+            <!-- ===================================================== -->
+
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -83,7 +86,44 @@
                 <scope>import</scope>
             </dependency>
 
-            <!-- LangChain4j -->
+            <!-- ===================================================== -->
+            <!-- Internal Modules                                      -->
+            <!-- ===================================================== -->
+
+            <dependency>
+                <groupId>io.aidevcopilot</groupId>
+                <artifactId>shared</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.aidevcopilot</groupId>
+                <artifactId>ai-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.aidevcopilot</groupId>
+                <artifactId>rag-engine</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.aidevcopilot</groupId>
+                <artifactId>infrastructure</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.aidevcopilot</groupId>
+                <artifactId>ai-backend</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- ===================================================== -->
+            <!-- AI                                                    -->
+            <!-- ===================================================== -->
+
             <dependency>
                 <groupId>dev.langchain4j</groupId>
                 <artifactId>langchain4j</artifactId>
@@ -96,7 +136,10 @@
                 <version>${langchain4j.version}</version>
             </dependency>
 
-            <!-- PDFBox -->
+            <!-- ===================================================== -->
+            <!-- PDF                                                   -->
+            <!-- ===================================================== -->
+
             <dependency>
                 <groupId>org.apache.pdfbox</groupId>
                 <artifactId>pdfbox</artifactId>
