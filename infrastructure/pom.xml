@@ -55,6 +55,12 @@
             <artifactId>pdfbox</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>io.aidevcopilot</groupId>
+            <artifactId>ai-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>

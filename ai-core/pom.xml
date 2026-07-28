@@ -16,5 +16,11 @@
     <artifactId>ai-core</artifactId>
 
     <name>AI Core</name>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

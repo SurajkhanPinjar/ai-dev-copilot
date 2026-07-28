@@ -1,7 +1,10 @@
 package io.aidevcopilot.backend.service.impl;
 
+import io.aidevcopilot.backend.dto.TaskRequest;
+import io.aidevcopilot.backend.dto.TaskResponse;
 import io.aidevcopilot.backend.service.ChatService;
-import io.aidevcopilot.infrastructure.client.ai.AIChatClient;
+import io.aidevcopilot.core.model.PromptContext;
+import io.aidevcopilot.core.task.TaskRouter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -12,21 +15,26 @@ public class ChatServiceImpl implements ChatService {
     private static final Logger log =
             LoggerFactory.getLogger(ChatServiceImpl.class);
 
-    private final AIChatClient aiChatClient;
+    private final TaskRouter taskRouter;
 
-    public ChatServiceImpl(AIChatClient aiChatClient) {
-        this.aiChatClient = aiChatClient;
+    public ChatServiceImpl(TaskRouter taskRouter) {
+        this.taskRouter = taskRouter;
     }
 
     @Override
-    public String chat(String prompt) {
+    public TaskResponse execute(TaskRequest request) {
 
-        log.info("Processing chat request");
+        log.info("Processing AI task: {}", request.task());
 
-        String response = aiChatClient.chat(prompt);
+        PromptContext context = new PromptContext(
+                request.task(),
+                request.input()
+        );
 
-        log.info("Chat request processed successfully");
+        String response = taskRouter.execute(context);
 
-        return response;
+        log.info("AI task processed successfully");
+
+        return new TaskResponse(response);
     }
 }
