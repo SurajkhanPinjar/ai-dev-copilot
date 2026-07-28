@@ -14,3 +14,19 @@ qdrant:
   host: localhost
   port: 6334
   collection: ai-dev-copilot
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+  endpoint:
+    health:
+      show-details: always
+
+info:
+  app:
+    name: AI Dev Copilot
+    description: AI-powered Backend Engineering Assistant
+    version: 1.0.0
