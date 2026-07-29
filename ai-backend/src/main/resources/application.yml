@@ -2,6 +2,20 @@ spring:
   application:
     name: ai-backend
 
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ragdb
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
 server:
   port: 8080
 
@@ -9,11 +23,6 @@ ollama:
   base-url: http://localhost:11434
   chat-model: mistral:latest
   embedding-model: nomic-embed-text:latest
-
-qdrant:
-  host: localhost
-  port: 6334
-  collection: ai-dev-copilot
 
 management:
   endpoints:

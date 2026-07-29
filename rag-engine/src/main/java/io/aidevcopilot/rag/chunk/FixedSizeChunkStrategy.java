@@ -3,6 +3,7 @@ package io.aidevcopilot.rag.chunk;
 import io.aidevcopilot.rag.model.ChunkMetadata;
 import io.aidevcopilot.rag.model.Document;
 import io.aidevcopilot.rag.model.DocumentChunk;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Component
+@Primary
 public class FixedSizeChunkStrategy implements ChunkStrategy {
 
     private static final int CHUNK_SIZE = 500;

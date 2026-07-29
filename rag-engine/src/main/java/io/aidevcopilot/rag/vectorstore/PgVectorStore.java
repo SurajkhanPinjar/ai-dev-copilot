@@ -1,7 +1,7 @@
 package io.aidevcopilot.rag.vectorstore;
 
+import io.aidevcopilot.ports.model.SearchResult;
 import io.aidevcopilot.rag.model.EmbeddingChunk;
-import io.aidevcopilot.rag.model.SearchResult;
 import io.aidevcopilot.rag.util.VectorUtils;
 import io.aidevcopilot.rag.vectorstore.mapper.ChunkEmbeddingMapper;
 import io.aidevcopilot.rag.vectorstore.repository.ChunkEmbeddingRepository;
@@ -21,9 +21,7 @@ public class PgVectorStore implements VectorStore {
 
     @Override
     public void save(EmbeddingChunk chunk) {
-
         repository.save(mapper.toEntity(chunk));
-
         log.info(
                 "Stored chunk {} for document {}",
                 chunk.getChunkIndex(),
@@ -58,7 +56,7 @@ public class PgVectorStore implements VectorStore {
 
     @Override
     public List<SearchResult> searchSimilar(float[] queryEmbedding,
-                                              int topK) {
+                                            int topK) {
 
         if (queryEmbedding == null || queryEmbedding.length == 0) {
             log.warn("Query embedding is empty.");

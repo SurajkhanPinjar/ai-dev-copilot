@@ -20,6 +20,7 @@
 
     <modules>
         <module>shared</module>
+        <module>ai-ports</module>
         <module>ai-core</module>
         <module>rag-engine</module>
         <module>infrastructure</module>
@@ -120,6 +121,12 @@
             <dependency>
                 <groupId>io.aidevcopilot</groupId>
                 <artifactId>ai-backend</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.aidevcopilot</groupId>
+                <artifactId>ai-ports</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

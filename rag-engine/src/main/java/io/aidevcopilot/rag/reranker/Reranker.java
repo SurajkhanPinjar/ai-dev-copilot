@@ -1,6 +1,7 @@
 package io.aidevcopilot.rag.reranker;
 
-import io.aidevcopilot.rag.model.SearchResult;
+
+import io.aidevcopilot.ports.model.SearchResult;
 
 import java.util.List;
 

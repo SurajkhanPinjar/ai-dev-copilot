@@ -1,6 +1,7 @@
 package io.aidevcopilot.core.prompt;
 
 import io.aidevcopilot.core.model.PromptContext;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -8,13 +9,10 @@ import org.springframework.stereotype.Service;
  * for different AI tasks.
  */
 @Service
+@RequiredArgsConstructor
 public class PromptService {
 
     private final PromptBuilder promptBuilder;
-
-    public PromptService() {
-        this.promptBuilder = new PromptBuilder();
-    }
 
     /**
      * Generates the final prompt.
@@ -23,7 +21,12 @@ public class PromptService {
      * @return Prompt ready for the LLM
      */
     public String generatePrompt(PromptContext context) {
-        return promptBuilder.build(context);
-    }
 
+        String template = PromptTemplate.getTemplate(context.task());
+
+        return promptBuilder.build(
+                template,
+                context
+        );
+    }
 }

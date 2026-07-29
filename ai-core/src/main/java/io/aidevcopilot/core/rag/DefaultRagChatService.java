@@ -1,11 +1,11 @@
 package io.aidevcopilot.core.rag;
 
-import io.aidevcopilot.core.llm.AIChatClient;
 import io.aidevcopilot.core.model.PromptContext;
 import io.aidevcopilot.core.prompt.PromptService;
-import io.aidevcopilot.rag.model.SearchRequest;
-import io.aidevcopilot.rag.model.SearchResult;
-import io.aidevcopilot.rag.orchestrator.RagOrchestrator;
+import io.aidevcopilot.ports.llm.AIChatClient;
+import io.aidevcopilot.ports.model.SearchRequest;
+import io.aidevcopilot.ports.model.SearchResult;
+import io.aidevcopilot.ports.orchestrator.RagOrchestrator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

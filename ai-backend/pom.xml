@@ -19,14 +19,6 @@
 
     <dependencies>
 
-        <!-- Internal Modules -->
-
-        <dependency>
-            <groupId>io.aidevcopilot</groupId>
-            <artifactId>shared</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>io.aidevcopilot</groupId>
             <artifactId>ai-core</artifactId>
@@ -36,6 +28,12 @@
         <dependency>
             <groupId>io.aidevcopilot</groupId>
             <artifactId>infrastructure</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.aidevcopilot</groupId>
+            <artifactId>rag-engine</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -72,16 +70,31 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- ===================================================== -->
+        <!-- Spring                                                -->
+        <!-- ===================================================== -->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+
+        <!-- ===================================================== -->
+        <!-- Lombok                                                -->
+        <!-- ===================================================== -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-
         </plugins>
     </build>
 

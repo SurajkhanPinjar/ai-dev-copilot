@@ -1,35 +1,32 @@
 package io.aidevcopilot.core.prompt;
 
 import io.aidevcopilot.core.model.PromptContext;
-
-import java.util.Objects;
+import org.springframework.stereotype.Component;
 
 /**
- * Builds the final prompt by replacing template placeholders
- * with runtime values.
+ * Builds the final prompt by replacing
+ * template placeholders.
  */
+@Component
 public class PromptBuilder {
 
-    /**
-     * Builds the final prompt for the given context.
-     *
-     * @param context Prompt context
-     * @return Final prompt ready to send to the LLM
-     */
-    public String build(PromptContext context) {
+    public String build(
+            String template,
+            PromptContext context
+    ) {
 
-        Objects.requireNonNull(context, "PromptContext cannot be null");
+        return template
+                .replace(
+                        "{{input}}",
+                        value(context.input())
+                )
+                .replace(
+                        "{{context}}",
+                        value(context.context())
+                );
+    }
 
-        String template = PromptTemplate.get(context.task());
-
-        if (template == null) {
-            throw new IllegalArgumentException(
-                    "No prompt template found for task: " + context.task());
-        }
-
-        return template.replace(
-                "{{input}}",
-                context.input() == null ? "" : context.input().trim()
-        );
+    private String value(String text) {
+        return text == null ? "" : text.trim();
     }
 }

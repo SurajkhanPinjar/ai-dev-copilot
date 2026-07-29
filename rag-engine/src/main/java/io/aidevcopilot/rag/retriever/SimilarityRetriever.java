@@ -1,10 +1,8 @@
 package io.aidevcopilot.rag.retriever;
 
-import io.aidevcopilot.rag.model.EmbeddingChunk;
-import io.aidevcopilot.rag.model.SearchResult;
+import io.aidevcopilot.ports.model.SearchResult;
 import io.aidevcopilot.rag.vectorstore.VectorStore;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

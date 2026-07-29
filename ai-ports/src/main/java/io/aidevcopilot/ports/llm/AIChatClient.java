@@ -1,4 +1,4 @@
-package io.aidevcopilot.core.llm;
+package io.aidevcopilot.ports.llm;
 
 public interface AIChatClient {
 

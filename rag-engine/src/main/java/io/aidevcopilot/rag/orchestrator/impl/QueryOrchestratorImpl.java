@@ -1,8 +1,8 @@
 package io.aidevcopilot.rag.orchestrator.impl;
 
+import io.aidevcopilot.ports.model.SearchRequest;
+import io.aidevcopilot.ports.model.SearchResult;
 import io.aidevcopilot.rag.embedding.EmbeddingService;
-import io.aidevcopilot.rag.model.SearchRequest;
-import io.aidevcopilot.rag.model.SearchResult;
 import io.aidevcopilot.rag.orchestrator.QueryOrchestrator;
 import io.aidevcopilot.rag.retriever.Retriever;
 import lombok.RequiredArgsConstructor;

@@ -22,15 +22,14 @@
         <!-- ===================================================== -->
         <!-- Internal Modules                                      -->
         <!-- ===================================================== -->
-
         <dependency>
             <groupId>io.aidevcopilot</groupId>
-            <artifactId>shared</artifactId>
+            <artifactId>infrastructure</artifactId>
         </dependency>
 
         <dependency>
             <groupId>io.aidevcopilot</groupId>
-            <artifactId>infrastructure</artifactId>
+            <artifactId>ai-ports</artifactId>
         </dependency>
 
         <!-- ===================================================== -->

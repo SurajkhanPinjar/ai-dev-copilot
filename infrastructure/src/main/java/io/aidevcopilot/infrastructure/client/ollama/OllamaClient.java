@@ -1,7 +1,7 @@
 package io.aidevcopilot.infrastructure.client.ollama;
 
 import dev.langchain4j.model.chat.ChatModel;
-import io.aidevcopilot.core.llm.AIChatClient;
+import io.aidevcopilot.ports.llm.AIChatClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

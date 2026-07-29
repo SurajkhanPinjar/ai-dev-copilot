@@ -1,9 +1,9 @@
 package io.aidevcopilot.rag.orchestrator.impl;
 
-import io.aidevcopilot.rag.model.SearchRequest;
-import io.aidevcopilot.rag.model.SearchResult;
+import io.aidevcopilot.ports.model.SearchRequest;
+import io.aidevcopilot.ports.model.SearchResult;
+import io.aidevcopilot.ports.orchestrator.RagOrchestrator;
 import io.aidevcopilot.rag.orchestrator.QueryOrchestrator;
-import io.aidevcopilot.rag.orchestrator.RagOrchestrator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

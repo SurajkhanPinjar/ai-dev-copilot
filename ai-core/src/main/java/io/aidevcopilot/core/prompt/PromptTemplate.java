@@ -18,9 +18,27 @@ public final class PromptTemplate {
             """
             You are AI Dev Copilot, an expert Java Backend Engineer.
 
-            Answer the following question:
+            Answer ONLY using the supplied context.
+
+            If the answer cannot be found in the context,
+            respond with:
+            "I couldn't find that information in the available documents."
+
+            =====================================
+
+            Context:
+
+            {{context}}
+
+            =====================================
+
+            Question:
 
             {{input}}
+
+            =====================================
+
+            Answer:
             """,
 
             AITask.EXPLAIN_CODE,
@@ -74,7 +92,16 @@ public final class PromptTemplate {
             """
     );
 
-    public static String get(AITask task) {
-        return TEMPLATES.get(task);
+    public static String getTemplate(AITask task) {
+
+        String template = TEMPLATES.get(task);
+
+        if (template == null) {
+            throw new IllegalArgumentException(
+                    "No prompt template found for task: " + task
+            );
+        }
+
+        return template;
     }
 }

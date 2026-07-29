@@ -1,36 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="https://maven.apache.org/POM/4.0.0
-         https://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>io.aidevcopilot</groupId>
         <artifactId>ai-dev-copilot</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>ai-core</artifactId>
-
-    <name>AI Core</name>
+    <artifactId>ai-ports</artifactId>
 
     <dependencies>
 
         <!-- ===================================================== -->
-        <!-- Internal Modules                                      -->
-        <!-- ===================================================== -->
-        <dependency>
-            <groupId>io.aidevcopilot</groupId>
-            <artifactId>ai-ports</artifactId>
-        </dependency>
-
-        <!-- ===================================================== -->
         <!-- Spring                                                -->
         <!-- ===================================================== -->
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -39,7 +24,6 @@
         <!-- ===================================================== -->
         <!-- Lombok                                                -->
         <!-- ===================================================== -->
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -54,7 +38,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
 </project>

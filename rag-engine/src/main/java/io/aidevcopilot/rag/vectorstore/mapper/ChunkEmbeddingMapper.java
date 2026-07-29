@@ -1,8 +1,8 @@
 package io.aidevcopilot.rag.vectorstore.mapper;
 
 import com.pgvector.PGvector;
+import io.aidevcopilot.ports.model.SearchResult;
 import io.aidevcopilot.rag.model.EmbeddingChunk;
-import io.aidevcopilot.rag.model.SearchResult;
 import io.aidevcopilot.rag.vectorstore.entity.ChunkEmbeddingEntity;
 import org.springframework.stereotype.Component;
 

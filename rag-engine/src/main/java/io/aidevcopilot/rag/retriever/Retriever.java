@@ -1,7 +1,7 @@
 package io.aidevcopilot.rag.retriever;
 
+import io.aidevcopilot.ports.model.SearchResult;
 import io.aidevcopilot.rag.model.EmbeddingChunk;
-import io.aidevcopilot.rag.model.SearchResult;
 
 import java.util.List;
 

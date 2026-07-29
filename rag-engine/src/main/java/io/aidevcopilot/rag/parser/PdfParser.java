@@ -1,13 +1,16 @@
 package io.aidevcopilot.rag.parser;
 
+import dev.langchain4j.agent.tool.P;
 import io.aidevcopilot.rag.model.Document;
 import io.aidevcopilot.rag.model.DocumentType;
 import io.aidevcopilot.rag.util.PdfUtils;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
 
 @Component
+@Primary
 public class PdfParser implements DocumentParser {
 
     @Override

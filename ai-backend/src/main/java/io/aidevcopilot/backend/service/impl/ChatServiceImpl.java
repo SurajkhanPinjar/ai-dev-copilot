@@ -28,7 +28,8 @@ public class ChatServiceImpl implements ChatService {
 
         PromptContext context = new PromptContext(
                 request.task(),
-                request.input()
+                request.input(),
+                null
         );
 
         String response = taskRouter.execute(context);
