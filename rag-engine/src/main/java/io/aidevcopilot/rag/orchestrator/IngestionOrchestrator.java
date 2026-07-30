@@ -1,6 +1,7 @@
 package io.aidevcopilot.rag.orchestrator;
 
-import io.aidevcopilot.rag.model.Document;
+
+import io.aidevcopilot.ports.model.Document;
 
 public interface IngestionOrchestrator {
 

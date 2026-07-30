@@ -1,6 +1,7 @@
 package io.aidevcopilot.rag.loader;
 
-import io.aidevcopilot.rag.model.Document;
+
+import io.aidevcopilot.ports.model.Document;
 
 import java.nio.file.Path;
 

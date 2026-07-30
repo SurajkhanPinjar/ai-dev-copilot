@@ -1,6 +1,6 @@
 package io.aidevcopilot.rag.chunk;
 
-import io.aidevcopilot.rag.model.Document;
+import io.aidevcopilot.ports.model.Document;
 import io.aidevcopilot.rag.model.DocumentChunk;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package io.aidevcopilot.rag.chunk;
 
+import io.aidevcopilot.ports.model.Document;
 import io.aidevcopilot.rag.model.ChunkMetadata;
-import io.aidevcopilot.rag.model.Document;
 import io.aidevcopilot.rag.model.DocumentChunk;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,7 @@
 package io.aidevcopilot.rag.orchestrator.impl;
 
+import io.aidevcopilot.ports.model.Document;
 import io.aidevcopilot.rag.chunk.ChunkService;
-import io.aidevcopilot.rag.model.Document;
 import io.aidevcopilot.rag.model.DocumentChunk;
 import io.aidevcopilot.rag.orchestrator.DocumentOrchestrator;
 import io.aidevcopilot.rag.parser.DocumentParser;

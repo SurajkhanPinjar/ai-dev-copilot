@@ -1,6 +1,6 @@
 package io.aidevcopilot.rag.parser;
 
-import io.aidevcopilot.rag.model.Document;
+import io.aidevcopilot.ports.model.Document;
 import io.aidevcopilot.rag.model.DocumentType;
 
 public interface DocumentParser {

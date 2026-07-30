@@ -1,6 +1,6 @@
 package io.aidevcopilot.rag.indexer;
 
-import io.aidevcopilot.rag.model.Document;
+import io.aidevcopilot.ports.model.Document;
 import org.springframework.stereotype.Component;
 
 @Component

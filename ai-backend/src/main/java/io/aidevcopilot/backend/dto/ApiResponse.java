@@ -22,8 +22,20 @@ public class ApiResponse<T> {
         this.data = data;
     }
 
-    public boolean isSuccess() {
-        return success;
+    public static <T> ApiResponse<T> success(T data) {
+        return new ApiResponse<>(
+                true,
+                LocalDateTime.now(),
+                data
+        );
+    }
+
+    public static <T> ApiResponse<T> failure(T data) {
+        return new ApiResponse<>(
+                false,
+                LocalDateTime.now(),
+                data
+        );
     }
 
     public void setSuccess(boolean success) {

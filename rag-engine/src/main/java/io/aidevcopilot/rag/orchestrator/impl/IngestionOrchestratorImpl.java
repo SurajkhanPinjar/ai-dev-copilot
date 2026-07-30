@@ -1,7 +1,7 @@
 package io.aidevcopilot.rag.orchestrator.impl;
 
+import io.aidevcopilot.ports.model.Document;
 import io.aidevcopilot.rag.embedding.EmbeddingService;
-import io.aidevcopilot.rag.model.Document;
 import io.aidevcopilot.rag.model.DocumentChunk;
 import io.aidevcopilot.rag.model.EmbeddingChunk;
 import io.aidevcopilot.rag.orchestrator.DocumentOrchestrator;
