@@ -1,8 +1,9 @@
 package io.aidevcopilot.rag.parser;
 
-import io.aidevcopilot.ports.model.Document;
-import io.aidevcopilot.rag.model.DocumentType;
+import io.aidevcopilot.ports.model.DocumentType;
 import org.springframework.stereotype.Component;
+
+import java.nio.file.Path;
 
 @Component
 public class MarkdownParser implements DocumentParser {
@@ -13,8 +14,9 @@ public class MarkdownParser implements DocumentParser {
     }
 
     @Override
-    public String parse(Document document) {
-        throw new UnsupportedOperationException("Markdown parser not implemented yet.");
+    public String parse(Path filePath) {
+        throw new UnsupportedOperationException(
+                "Markdown parser not implemented yet."
+        );
     }
-
 }

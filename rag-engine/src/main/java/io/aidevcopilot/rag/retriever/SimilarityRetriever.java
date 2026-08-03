@@ -1,7 +1,7 @@
 package io.aidevcopilot.rag.retriever;
 
 import io.aidevcopilot.ports.model.SearchResult;
-import io.aidevcopilot.rag.vectorstore.VectorStore;
+import io.aidevcopilot.ports.vector.VectorStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

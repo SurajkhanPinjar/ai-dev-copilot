@@ -1,11 +1,5 @@
 package io.aidevcopilot.rag.util;
 
-import io.aidevcopilot.rag.model.EmbeddingChunk;
-import io.aidevcopilot.rag.vectorstore.entity.ChunkEmbeddingEntity;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 public final class VectorUtils {
 
     private VectorUtils() {
@@ -13,20 +7,26 @@ public final class VectorUtils {
 
     public static String toPgVector(float[] embedding) {
 
-        return Arrays.stream(toDoubleArray(embedding))
-                .mapToObj(Double::toString)
-                .collect(Collectors.joining(",", "[", "]"));
-    }
-
-    private static double[] toDoubleArray(float[] input) {
-
-        double[] result = new double[input.length];
-
-        for (int i = 0; i < input.length; i++) {
-            result[i] = input[i];
+        if (embedding == null || embedding.length == 0) {
+            throw new IllegalArgumentException(
+                    "Embedding cannot be null or empty."
+            );
         }
 
-        return result;
+        StringBuilder builder = new StringBuilder("[");
+
+        for (int i = 0; i < embedding.length; i++) {
+
+            if (i > 0) {
+                builder.append(",");
+            }
+
+            builder.append(embedding[i]);
+        }
+
+        builder.append("]");
+
+        return builder.toString();
     }
 
 }

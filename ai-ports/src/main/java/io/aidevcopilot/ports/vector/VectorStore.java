@@ -1,7 +1,7 @@
-package io.aidevcopilot.rag.vectorstore;
+package io.aidevcopilot.ports.vector;
 
+import io.aidevcopilot.ports.model.EmbeddingChunk;
 import io.aidevcopilot.ports.model.SearchResult;
-import io.aidevcopilot.rag.model.EmbeddingChunk;
 
 import java.util.List;
 

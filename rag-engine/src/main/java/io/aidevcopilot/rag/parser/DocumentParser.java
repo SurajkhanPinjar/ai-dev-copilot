@@ -1,12 +1,13 @@
 package io.aidevcopilot.rag.parser;
 
-import io.aidevcopilot.ports.model.Document;
-import io.aidevcopilot.rag.model.DocumentType;
+import io.aidevcopilot.ports.model.DocumentType;
+
+import java.nio.file.Path;
 
 public interface DocumentParser {
 
-    boolean supports(DocumentType documentType);
+    boolean supports(DocumentType type);
 
-    String parse(Document document);
+    String parse(Path filePath);
 
 }

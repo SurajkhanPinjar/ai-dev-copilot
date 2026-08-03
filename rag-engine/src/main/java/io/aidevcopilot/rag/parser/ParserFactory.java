@@ -1,6 +1,6 @@
 package io.aidevcopilot.rag.parser;
 
-import io.aidevcopilot.rag.model.DocumentType;
+import io.aidevcopilot.ports.model.DocumentType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,16 +11,13 @@ import java.util.List;
 public class ParserFactory {
 
     private final List<DocumentParser> parsers;
-
-    public DocumentParser getParser(DocumentType documentType) {
-
+    public DocumentParser getParser(
+            DocumentType type
+    ) {
         return parsers.stream()
-                .filter(parser -> parser.supports(documentType))
+                .filter(p -> p.supports(type))
                 .findFirst()
-                .orElseThrow(() ->
-                        new IllegalArgumentException(
-                                "No parser found for document type : " + documentType));
-
+                .orElseThrow();
     }
 
 }

@@ -12,9 +12,12 @@ spring:
     hibernate:
       ddl-auto: update
 
+    show-sql: true
+
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
 
 server:
   port: 8080
@@ -23,6 +26,14 @@ ollama:
   base-url: http://localhost:11434
   chat-model: mistral:latest
   embedding-model: nomic-embed-text:latest
+
+rag:
+  storage:
+    upload-dir: uploads
+
+  vector:
+    dimensions: 768
+    top-k: 5
 
 management:
   endpoints:
@@ -33,6 +44,13 @@ management:
   endpoint:
     health:
       show-details: always
+
+logging:
+  level:
+    root: INFO
+    io.aidevcopilot: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
 
 info:
   app:
