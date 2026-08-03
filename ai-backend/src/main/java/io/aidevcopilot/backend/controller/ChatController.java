@@ -3,7 +3,10 @@ package io.aidevcopilot.backend.controller;
 import io.aidevcopilot.backend.dto.ApiResponse;
 import io.aidevcopilot.backend.dto.TaskRequest;
 import io.aidevcopilot.backend.dto.TaskResponse;
+import io.aidevcopilot.backend.request.SearchRequest;
+import io.aidevcopilot.backend.response.SearchResponse;
 import io.aidevcopilot.backend.service.ChatService;
+import io.aidevcopilot.backend.service.ChatFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -25,6 +28,8 @@ import java.time.LocalDateTime;
 public class ChatController {
 
     private final ChatService chatService;
+
+    private final ChatFacade chatFacade;
 
     @PostMapping("/tasks")
     @Operation(
@@ -55,5 +60,16 @@ public class ChatController {
                         response
                 )
         );
+    }
+
+    @PostMapping("/search")
+    public ApiResponse<SearchResponse> search(
+            @Valid @RequestBody SearchRequest request
+    ) {
+
+        SearchResponse response =
+                chatFacade.search(request);
+
+        return ApiResponse.success(response);
     }
 }

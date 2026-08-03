@@ -1,13 +1,9 @@
 package io.aidevcopilot.backend.service;
 
-import io.aidevcopilot.backend.dto.TaskRequest;
-import io.aidevcopilot.backend.dto.TaskResponse;
 import io.aidevcopilot.backend.request.SearchRequest;
 import io.aidevcopilot.backend.response.SearchResponse;
 
-public interface ChatService {
-
-    TaskResponse execute(TaskRequest request);
+public interface ChatFacade {
 
     SearchResponse search(SearchRequest request);
 
