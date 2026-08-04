@@ -1,0 +1,24 @@
+<idea-plugin>
+
+    <id>io.aidevcopilot.plugin</id>
+
+    <name>AI Dev Copilot</name>
+
+    <vendor>Suraj Pinjar</vendor>
+
+    <description>
+        AI Developer Assistant powered by Ollama and Spring Boot.
+    </description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+
+        <toolWindow
+                id="AI Dev Copilot"
+                anchor="right"
+                factoryClass="io.aidevcopilot.plugin.toolwindow.AiToolWindowFactory"/>
+
+    </extensions>
+
+</idea-plugin>
