@@ -15,6 +15,7 @@ public class SearchResponse {
         this.data = data;
     }
 
+
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Data {
 
