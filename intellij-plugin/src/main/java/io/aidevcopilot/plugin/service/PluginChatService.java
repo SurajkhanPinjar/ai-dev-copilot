@@ -1,6 +1,7 @@
 package io.aidevcopilot.plugin.service;
 
 import io.aidevcopilot.plugin.client.AiBackendClient;
+import io.aidevcopilot.plugin.dto.AITask;
 
 public class PluginChatService {
 
@@ -13,12 +14,12 @@ public class PluginChatService {
     }
 
     public String executeTask(
-            String task,
+            AITask task,
             String input
     ) throws Exception {
 
         return backendClient.executeTask(
-                task,
+                task.name(),
                 input
         );
     }

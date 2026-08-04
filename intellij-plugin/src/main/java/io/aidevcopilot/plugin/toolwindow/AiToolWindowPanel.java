@@ -1,102 +1,125 @@
 package io.aidevcopilot.plugin.toolwindow;
 
-import io.aidevcopilot.plugin.service.PluginChatService;
+import io.aidevcopilot.plugin.client.AiBackendClient;
+import io.aidevcopilot.plugin.toolwindow.components.ButtonPanel;
+import io.aidevcopilot.plugin.toolwindow.components.HeaderPanel;
+import io.aidevcopilot.plugin.toolwindow.components.PromptPanel;
+import io.aidevcopilot.plugin.toolwindow.components.ResponsePanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 
 public class AiToolWindowPanel extends JPanel {
 
-    private final JTextArea questionArea;
-    private final JTextArea answerArea;
-    private final JButton askButton;
-    private final JLabel statusLabel;
+    private final HeaderPanel headerPanel;
+    private final PromptPanel promptPanel;
+    private final ResponsePanel responsePanel;
+    private final ButtonPanel buttonPanel;
 
-    private final PluginChatService chatService =
-            new PluginChatService();
+    private final AiBackendClient backendClient =
+            new AiBackendClient();
 
     public AiToolWindowPanel() {
 
-        setLayout(new BorderLayout(10, 10));
+        setLayout(new BorderLayout());
 
-        JLabel title = new JLabel(
-                "🤖 AI Dev Copilot",
-                SwingConstants.CENTER
-        );
+        headerPanel = new HeaderPanel();
+        promptPanel = new PromptPanel();
+        responsePanel = new ResponsePanel();
+        buttonPanel = new ButtonPanel();
 
-        title.setFont(
-                title.getFont().deriveFont(Font.BOLD, 20f)
-        );
+        JPanel topPanel = new JPanel(new BorderLayout());
 
-        statusLabel = new JLabel("Backend Status : 🔴 Disconnected");
+        topPanel.add(headerPanel, BorderLayout.NORTH);
+        topPanel.add(promptPanel, BorderLayout.CENTER);
+        topPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        questionArea = new JTextArea(5, 50);
-        questionArea.setLineWrap(true);
-        questionArea.setWrapStyleWord(true);
+        JSplitPane splitPane =
+                new JSplitPane(
+                        JSplitPane.VERTICAL_SPLIT,
+                        topPanel,
+                        responsePanel
+                );
 
-        answerArea = new JTextArea();
-        answerArea.setEditable(false);
-        answerArea.setLineWrap(true);
-        answerArea.setWrapStyleWord(true);
+        splitPane.setResizeWeight(0.35);
+        splitPane.setContinuousLayout(true);
+        splitPane.setOneTouchExpandable(true);
 
-        askButton = new JButton("Ask AI");
+        add(splitPane, BorderLayout.CENTER);
 
-        JPanel top = new JPanel(new BorderLayout());
+        ToolWindowManager.register(this);
 
-        top.add(title, BorderLayout.NORTH);
-        top.add(statusLabel, BorderLayout.SOUTH);
-
-        JPanel center = new JPanel(new BorderLayout(10, 10));
-
-        center.add(
-                new JScrollPane(questionArea),
-                BorderLayout.NORTH
-        );
-
-        center.add(
-                askButton,
-                BorderLayout.CENTER
-        );
-
-        center.add(
-                new JScrollPane(answerArea),
-                BorderLayout.SOUTH
-        );
-
-        add(top, BorderLayout.NORTH);
-        add(center, BorderLayout.CENTER);
-
-        askButton.addActionListener(event -> askQuestion());
+        registerListeners();
     }
 
-    private void askQuestion() {
+    private void registerListeners() {
 
-        String question = questionArea.getText().trim();
+        buttonPanel.getAskButton().addActionListener(e -> askAI());
 
-        if (question.isEmpty()) {
+        buttonPanel.getClearButton().addActionListener(e -> {
+
+            ToolWindowManager.setPrompt("");
+            ToolWindowManager.clearResponse();
+
+        });
+
+        buttonPanel.getCopyButton().addActionListener(e -> {
+
+            StringSelection selection =
+                    new StringSelection(
+                            responsePanel
+                                    .getResponsePane()
+                                    .getText()
+                    );
+
+            Toolkit.getDefaultToolkit()
+                    .getSystemClipboard()
+                    .setContents(selection, null);
 
             JOptionPane.showMessageDialog(
                     this,
-                    "Please enter a question.",
-                    "Validation",
+                    "Copied to clipboard.",
+                    "AI Dev Copilot",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+        });
+    }
+
+    private void askAI() {
+
+        String prompt =
+                promptPanel
+                        .getPromptArea()
+                        .getText()
+                        .trim();
+
+        if (prompt.isBlank()) {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Please enter a prompt.",
+                    "AI Dev Copilot",
                     JOptionPane.WARNING_MESSAGE
             );
 
             return;
         }
 
-        askButton.setEnabled(false);
+        ToolWindowManager.setTask("Chat");
+        ToolWindowManager.setStatus("🟡 Thinking...");
 
-        statusLabel.setText("Backend Status : 🟡 Asking...");
+        promptPanel.getPromptArea().setEditable(false);
+        buttonPanel.getAskButton().setEnabled(false);
 
-        answerArea.setText("Thinking...");
-
-        SwingWorker<String, Void> worker = new SwingWorker<>() {
+        new SwingWorker<String, Void>() {
 
             @Override
             protected String doInBackground() throws Exception {
 
-                return chatService.ask(question);
+                return backendClient.ask(prompt);
+
             }
 
             @Override
@@ -104,54 +127,92 @@ public class AiToolWindowPanel extends JPanel {
 
                 try {
 
-                    String answer = get();
+                    String response = get();
 
-                    answerArea.setText(answer);
+                    ToolWindowManager.showResponse(response);
+                    ToolWindowManager.setStatus("🟢 Connected");
 
-                    statusLabel.setText(
-                            "Backend Status : 🟢 Connected"
-                    );
+                    responsePanel
+                            .getResponsePane()
+                            .setCaretPosition(0);
 
                 } catch (Exception ex) {
 
-                    answerArea.setText(
-                            """
-                            Unable to connect to AI Backend.
-                            
-                            Please ensure:
-                            • Spring Boot backend is running
-                            • Ollama is running
-                            • Backend is listening on port 8080
-                            """
-                    );
+                    ToolWindowManager.showResponse(ex.getMessage());
+                    ToolWindowManager.setStatus("🔴 Error");
 
-                    statusLabel.setText(
-                            "Backend Status : 🔴 Error"
-                    );
+                } finally {
 
-                    ex.printStackTrace();
+                    promptPanel
+                            .getPromptArea()
+                            .setEditable(true);
+
+                    buttonPanel
+                            .getAskButton()
+                            .setEnabled(true);
+
                 }
-
-                askButton.setEnabled(true);
             }
-        };
 
-        worker.execute();
+        }.execute();
     }
 
-    public JButton getAskButton() {
-        return askButton;
+    public PromptPanel getPromptPanel() {
+        return promptPanel;
     }
 
-    public JTextArea getQuestionArea() {
-        return questionArea;
+    public ResponsePanel getResponsePanel() {
+        return responsePanel;
     }
 
-    public JTextArea getAnswerArea() {
-        return answerArea;
+    public HeaderPanel getHeaderPanel() {
+        return headerPanel;
     }
 
-    public JLabel getStatusLabel() {
-        return statusLabel;
+    public ButtonPanel getButtonPanel() {
+        return buttonPanel;
+    }
+
+    public void setResponse(String response) {
+
+        responsePanel
+                .getResponsePane()
+                .setText(response);
+
+        responsePanel
+                .getResponsePane()
+                .setCaretPosition(0);
+    }
+
+    public void setStatus(String status) {
+
+        headerPanel
+                .getStatusLabel()
+                .setText(status);
+    }
+
+    public void setPrompt(String prompt) {
+
+        promptPanel
+                .getPromptArea()
+                .setText(prompt);
+    }
+
+    public void clearResponse() {
+
+        responsePanel
+                .getResponsePane()
+                .setText("");
+    }
+
+    public void setTask(String task) {
+
+        headerPanel.setTask(task);
+    }
+
+    public void setModel(String model) {
+
+        headerPanel.setModel(model);
+
     }
 }

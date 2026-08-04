@@ -3,10 +3,10 @@ package io.aidevcopilot.plugin.action;
 
 import io.aidevcopilot.plugin.dto.AITask;
 
-public class SqlExplainAction extends AIAction {
+public class CodeReviewAction extends AIAction {
 
     @Override
     protected AITask getTask() {
-        return AITask.SQL_EXPLAIN;
+        return AITask.CODE_REVIEW;
     }
 }
