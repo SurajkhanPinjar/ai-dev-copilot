@@ -21,4 +21,20 @@
 
     </extensions>
 
+    <actions>
+
+        <action
+                id="ExplainCodeAction"
+                class="io.aidevcopilot.plugin.action.ExplainCodeAction"
+                text="Explain Code"
+                description="Explain selected Java code">
+
+            <add-to-group
+                    group-id="EditorPopupMenu"
+                    anchor="last"/>
+
+        </action>
+
+    </actions>
+
 </idea-plugin>
