@@ -58,7 +58,15 @@ public enum AITask {
      */
     GENERATE_API,
 
+    BUG_FINDER,
+
     RAG_CHAT,
+
+    SQL_EXPLAIN,
+
+    SPRING_BOOT_ADVISOR,
+
+    ARCHITECTURE_REVIEWER,
     /**
      * Generate Spring Boot service layer.
      */

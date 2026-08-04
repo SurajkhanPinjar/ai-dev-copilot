@@ -1,29 +1,30 @@
 package io.aidevcopilot.core.task;
 
 import io.aidevcopilot.core.model.PromptContext;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 
 /**
  * Routes incoming AI tasks to the appropriate task service.
  */
 @Service
+@RequiredArgsConstructor
 public class TaskRouter {
 
     private final ChatTaskService chatTaskService;
     private final ExplainCodeService explainCodeService;
     private final JavaDocService javaDocService;
     private final TestGenerationService testGenerationService;
+    private final BugFinderService bugFinderService;
+    private final CodeOptimizerService codeOptimizerService;
+    private final SpringBootAdviserService springBootAdviserService;
+    private final SQLExplainerService sqlExplainerService;
+    private final ArchitectureReviewerService architectureReviewerService;
 
-    public TaskRouter(ChatTaskService chatTaskService,
-                      ExplainCodeService explainCodeService,
-                      JavaDocService javaDocService,
-                      TestGenerationService testGenerationService) {
 
-        this.chatTaskService = chatTaskService;
-        this.explainCodeService = explainCodeService;
-        this.javaDocService = javaDocService;
-        this.testGenerationService = testGenerationService;
-    }
+
 
     /**
      * Routes the request to the appropriate AI task service.
@@ -46,6 +47,22 @@ public class TaskRouter {
 
             case GENERATE_TESTS ->
                     testGenerationService.execute(context);
+
+            case BUG_FINDER ->
+                    bugFinderService.execute(context);
+
+            case OPTIMIZE_CODE ->
+                    codeOptimizerService.execute(context);
+
+            case SPRING_BOOT_ADVISOR ->
+                    springBootAdviserService.execute(context);
+
+            case SQL_EXPLAIN ->
+                    sqlExplainerService.execute(context);
+
+            case ARCHITECTURE_REVIEWER ->
+                    architectureReviewerService.execute(context);
+
 
             default ->
                     throw new UnsupportedOperationException(

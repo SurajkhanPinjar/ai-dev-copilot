@@ -22,7 +22,8 @@ public class PromptService {
      */
     public String generatePrompt(PromptContext context) {
 
-        String template = PromptTemplate.getTemplate(context.task());
+        String template =
+                PromptTemplateRegistry.getTemplate(context.task());
 
         return promptBuilder.build(
                 template,
