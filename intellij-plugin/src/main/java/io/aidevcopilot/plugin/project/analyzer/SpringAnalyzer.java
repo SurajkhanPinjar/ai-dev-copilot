@@ -6,8 +6,10 @@ import com.intellij.psi.PsiJavaFile;
 import io.aidevcopilot.plugin.project.model.ProjectAnalysisResult;
 import io.aidevcopilot.plugin.project.model.SpringStatistics;
 
-public class SpringAnalyzer {
+public class SpringAnalyzer
+        implements ProjectFileAnalyzer {
 
+    @Override
     public void analyze(
             PsiJavaFile javaFile,
             ProjectAnalysisResult result

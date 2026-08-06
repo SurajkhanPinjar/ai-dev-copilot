@@ -9,15 +9,17 @@ import com.intellij.psi.PsiManager;
 import io.aidevcopilot.plugin.project.model.ProjectAnalysisResult;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class ProjectAnalyzer {
 
-    private final StatisticsAnalyzer statisticsAnalyzer =
-            new StatisticsAnalyzer();
-
-    private final SpringAnalyzer springAnalyzer =
-            new SpringAnalyzer();
+    private final List<ProjectFileAnalyzer> analyzers =
+            List.of(
+                    new StatisticsAnalyzer(),
+                    new SpringAnalyzer(),
+                    new DependencyAnalyzer()
+            );
 
     public ProjectAnalysisResult analyze(
             Project project
@@ -33,16 +35,18 @@ public class ProjectAnalyzer {
         Set<String> packages =
                 new HashSet<>();
 
+        PsiManager psiManager =
+                PsiManager.getInstance(project);
+
         ProjectFileIndex fileIndex =
                 ProjectRootManager.getInstance(project)
                         .getFileIndex();
 
         fileIndex.iterateContent(
-
                 virtualFile -> {
 
                     processFile(
-                            project,
+                            psiManager,
                             virtualFile,
                             result,
                             packages
@@ -50,50 +54,64 @@ public class ProjectAnalyzer {
 
                     return true;
                 }
-
         );
 
         result.getProjectStatistics()
-                .setPackages(packages.size());
+                .setPackages(
+                        packages.size()
+                );
 
         return result;
 
     }
 
     private void processFile(
-            Project project,
+            PsiManager psiManager,
             VirtualFile file,
             ProjectAnalysisResult result,
             Set<String> packages
     ) {
 
-        if (!"java".equalsIgnoreCase(
-                file.getExtension()
-        )) {
+        String extension =
+                file.getExtension();
+
+        if (!"java".equalsIgnoreCase(extension)) {
             return;
         }
 
-        if (!(PsiManager.getInstance(project)
-                .findFile(file) instanceof PsiJavaFile javaFile)) {
+        if (!(psiManager.findFile(file)
+                instanceof PsiJavaFile javaFile)) {
             return;
         }
 
-        packages.add(
-                javaFile.getPackageName()
-        );
+        String packageName =
+                javaFile.getPackageName();
 
-        result.getProjectStatistics()
-                .setPackages(packages.size());
+        if (!packageName.isBlank()) {
+            packages.add(packageName);
+        }
 
-        statisticsAnalyzer.analyze(
+        analyzeJavaFile(
                 javaFile,
                 result
         );
 
-        springAnalyzer.analyze(
-                javaFile,
-                result
-        );
+    }
+
+    private void analyzeJavaFile(
+            PsiJavaFile javaFile,
+            ProjectAnalysisResult result
+    ) {
+
+        for (ProjectFileAnalyzer analyzer :
+                analyzers) {
+
+            analyzer.analyze(
+                    javaFile,
+                    result
+            );
+
+        }
 
     }
 

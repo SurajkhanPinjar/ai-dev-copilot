@@ -5,8 +5,10 @@ import com.intellij.psi.PsiJavaFile;
 import io.aidevcopilot.plugin.project.model.ProjectAnalysisResult;
 import io.aidevcopilot.plugin.project.model.ProjectStatistics;
 
-public class StatisticsAnalyzer {
+public class StatisticsAnalyzer
+        implements ProjectFileAnalyzer {
 
+    @Override
     public void analyze(
             PsiJavaFile javaFile,
             ProjectAnalysisResult result
@@ -19,12 +21,10 @@ public class StatisticsAnalyzer {
         ProjectStatistics statistics =
                 result.getProjectStatistics();
 
-        // Count Java file
         statistics.setJavaFiles(
                 statistics.getJavaFiles() + 1
         );
 
-        // Count top-level types
         for (PsiClass psiClass : javaFile.getClasses()) {
 
             if (psiClass.isInterface()) {

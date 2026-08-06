@@ -8,6 +8,9 @@ public class ProjectAnalysisResult {
     private final SpringStatistics springStatistics =
             new SpringStatistics();
 
+    private final DependencyGraph dependencyGraph =
+            new DependencyGraph();
+
     public ProjectStatistics getProjectStatistics() {
         return projectStatistics;
     }
@@ -16,41 +19,62 @@ public class ProjectAnalysisResult {
         return springStatistics;
     }
 
+    public DependencyGraph getDependencyGraph() {
+        return dependencyGraph;
+    }
+
     @Override
     public String toString() {
 
-        return """
+        StringBuilder builder =
+                new StringBuilder();
+
+        builder.append("""
                 ======================================
                    AI DEV COPILOT PROJECT ANALYSIS
                 ======================================
 
+                """);
+
+        builder.append("""
                 Project Statistics
                 ------------------
-                Java Files     : %d
-                Packages       : %d
-                Classes        : %d
-                Interfaces     : %d
-                Records        : %d
-                Enums          : %d
+                """);
 
-                Spring Components
-                ------------------
-                Controllers    : %d
-                Rest Controllers : %d
-                Services       : %d
-                Repositories   : %d
-                Entities       : %d
-                Components     : %d
-                Configurations : %d
-                """.formatted(
+        builder.append(String.format(
+                """
+                Java Files       : %d
+                Packages         : %d
+                Classes          : %d
+                Interfaces       : %d
+                Records          : %d
+                Enums            : %d
 
+                """,
                 projectStatistics.getJavaFiles(),
                 projectStatistics.getPackages(),
                 projectStatistics.getClasses(),
                 projectStatistics.getInterfaces(),
                 projectStatistics.getRecords(),
-                projectStatistics.getEnums(),
+                projectStatistics.getEnums()
+        ));
 
+        builder.append("""
+                Spring Components
+                ------------------
+                """);
+
+        builder.append(String.format(
+                """
+                Controllers      : %d
+                Rest Controllers : %d
+                Services         : %d
+                Repositories     : %d
+                Entities         : %d
+                Components       : %d
+                Configurations   : %d
+
+                """,
                 springStatistics.getControllers(),
                 springStatistics.getRestControllers(),
                 springStatistics.getServices(),
@@ -58,8 +82,29 @@ public class ProjectAnalysisResult {
                 springStatistics.getEntities(),
                 springStatistics.getComponents(),
                 springStatistics.getConfigurations()
+        ));
 
-        );
+        builder.append("""
+                Dependencies
+                ------------------
+                """);
+
+        if (dependencyGraph.getEdges().isEmpty()) {
+
+            builder.append("No dependencies found.\n");
+
+        } else {
+
+            dependencyGraph.getEdges()
+                    .forEach(edge ->
+                            builder.append(edge.getFrom())
+                                    .append(" -> ")
+                                    .append(edge.getTo())
+                                    .append("\n"));
+
+        }
+
+        return builder.toString();
 
     }
 
