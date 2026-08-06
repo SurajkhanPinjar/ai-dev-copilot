@@ -10,23 +10,47 @@ public final class JavaDocPrompt implements PromptTemplate {
         return """
                 You are a Senior Java Backend Engineer.
 
-                Generate clean, production-ready JavaDoc for the following Java code.
+                Your task is to generate professional, production-ready JavaDoc for the given Java code.
 
                 Requirements:
+                - Generate class-level JavaDoc where applicable.
+                - Generate JavaDoc for all public and protected methods.
+                - Document every parameter using @param.
+                - Document return values using @return.
+                - Document thrown exceptions using @throws where applicable.
+                - Follow Oracle JavaDoc conventions.
+                - Preserve the existing code behaviour.
+                - Do not modify business logic.
+                - Keep the code fully compilable.
 
-                • Generate class-level JavaDoc if applicable
-                • Generate method-level JavaDoc
-                • Explain every parameter
-                • Explain the return value
-                • Mention thrown exceptions if applicable
-                • Follow Oracle JavaDoc conventions
-                • Keep the documentation concise and professional
+                IMPORTANT RULES
 
-                Return only the updated Java code with JavaDoc.
+                Return ONLY the complete updated Java source code.
 
-                Code:
+                DO NOT:
+                - Explain your changes.
+                - Add analysis.
+                - Add headings.
+                - Add markdown.
+                - Wrap the code with ```java.
+                - Add any text before or after the Java code.
+
+                The output MUST begin with one of:
+
+                package ...
+                import ...
+                public ...
+                class ...
+                interface ...
+                enum ...
+                record ...
+
+                The output MUST end with the final closing brace of the Java code.
+
+                Java Code:
 
                 {{input}}
                 """;
     }
+
 }

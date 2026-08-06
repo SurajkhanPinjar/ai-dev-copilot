@@ -3,7 +3,7 @@ package io.aidevcopilot.plugin.action;
 
 import io.aidevcopilot.plugin.dto.AITask;
 
-public class GenerateJavaDocAction extends AIAction {
+public class GenerateJavaDocAction extends GenerationAction {
 
     @Override
     protected AITask getTask() {

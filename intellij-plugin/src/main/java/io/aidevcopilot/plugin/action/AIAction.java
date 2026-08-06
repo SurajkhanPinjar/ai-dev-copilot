@@ -2,12 +2,9 @@ package io.aidevcopilot.plugin.action;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.editor.Editor;
 import io.aidevcopilot.plugin.dto.AITask;
 import io.aidevcopilot.plugin.service.PluginChatService;
-import io.aidevcopilot.plugin.toolwindow.ToolWindowManager;
-import io.aidevcopilot.plugin.util.SelectedCodeUtil;
 
 import javax.swing.*;
 
@@ -17,85 +14,110 @@ public abstract class AIAction extends AnAction {
             new PluginChatService();
 
     @Override
-    public void actionPerformed(AnActionEvent event) {
+    public final void actionPerformed(
+            AnActionEvent event
+    ) {
 
-        Editor editor = event.getData(CommonDataKeys.EDITOR);
+        try {
 
-        if (editor == null) {
-            return;
-        }
+            beforeExecution(event);
 
-        String input = SelectedCodeUtil.getSelectedCode(editor);
+            Editor editor =
+                    getEditor(event);
 
-        if (input == null || input.isBlank()) {
+            final String input =
+                    getInput(event);
 
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Please select some code.",
-                    "AI Dev Copilot",
-                    JOptionPane.WARNING_MESSAGE
-            );
+            SwingWorker<String, Void> worker =
+                    new SwingWorker<>() {
 
-            return;
-        }
+                        @Override
+                        protected String doInBackground()
+                                throws Exception {
 
-        SwingWorker<String, Void> worker =
-                new SwingWorker<>() {
-
-                    @Override
-                    protected String doInBackground() throws Exception {
-
-                        return chatService.executeTask(
-                                getTask(),
-                                input
-                        );
-                    }
-
-                    @Override
-                    protected void done() {
-
-                        try {
-
-                            ToolWindowManager.showResponse(get());
-
-                        } catch (Exception ex) {
-
-                            JOptionPane.showMessageDialog(
-                                    null,
-                                    ex.getMessage(),
-                                    "AI Dev Copilot",
-                                    JOptionPane.ERROR_MESSAGE
+                            return chatService.executeTask(
+                                    getTask(),
+                                    input
                             );
 
-                            ex.printStackTrace();
                         }
-                    }
-                };
 
-        worker.execute();
+                        @Override
+                        protected void done() {
+
+                            try {
+
+                                String response =
+                                        get();
+
+                                onSuccess(
+                                        editor,
+                                        input,
+                                        response
+                                );
+
+                            } catch (Exception ex) {
+
+                                onFailure(ex);
+
+                            } finally {
+
+                                afterExecution();
+
+                            }
+
+                        }
+
+                    };
+
+            worker.execute();
+
+        } catch (Exception ex) {
+
+            onFailure(ex);
+
+        }
+
     }
 
-    @Override
-    public void update(AnActionEvent event) {
-
-        Editor editor =
-                event.getData(CommonDataKeys.EDITOR);
-
-        event.getPresentation().setEnabledAndVisible(
-                editor != null &&
-                        editor.getSelectionModel().hasSelection()
-        );
+    protected void beforeExecution(
+            AnActionEvent event
+    ) {
     }
 
-    protected void showResult(String response) {
-
-        JOptionPane.showMessageDialog(
-                null,
-                response,
-                "AI Dev Copilot",
-                JOptionPane.INFORMATION_MESSAGE
-        );
+    protected void afterExecution() {
     }
 
     protected abstract AITask getTask();
+
+    protected abstract String getInput(
+            AnActionEvent event
+    );
+
+    protected abstract Editor getEditor(
+            AnActionEvent event
+    );
+
+    /**
+     * Called when AI request succeeds.
+     */
+    protected abstract void onSuccess(
+            Editor editor,
+            String originalCode,
+            String response
+    );
+
+    protected void onFailure(
+            Exception exception
+    ) {
+
+        JOptionPane.showMessageDialog(
+                null,
+                exception.getMessage(),
+                "AI Dev Copilot",
+                JOptionPane.ERROR_MESSAGE
+        );
+
+    }
+
 }

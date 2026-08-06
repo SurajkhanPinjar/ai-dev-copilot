@@ -10,34 +10,43 @@ public final class OptimizerPrompt implements PromptTemplate {
         return """
                 You are a Senior Java Performance Engineer.
 
-                Optimize the following Java code.
+                Your task is to optimize the following Java code.
 
-                Analyze:
+                Goals:
+                - Improve performance.
+                - Reduce unnecessary object creation.
+                - Improve readability.
+                - Improve maintainability.
+                - Follow Java 21 best practices.
+                - Preserve the original behaviour.
+                - Keep the code fully compilable.
 
-                1. Performance Bottlenecks
-                2. Time Complexity
-                3. Space Complexity
-                4. Memory Usage
-                5. Object Creation
-                6. Collections Usage
-                7. Stream API Improvements
-                8. Thread Safety
-                9. Readability
-                10. Best Practices
+                IMPORTANT RULES
 
-                Return the answer using:
+                Return ONLY the complete optimized Java source code.
 
-                ## Current Analysis
+                DO NOT:
+                - Explain your changes.
+                - Add analysis.
+                - Add headings.
+                - Add markdown.
+                - Wrap the code with ```java.
+                - Add comments outside the code.
+                - Add any text before or after the code.
 
-                ## Problems
+                The output MUST begin with one of:
 
-                ## Optimizations
+                package ...
+                import ...
+                public ...
+                class ...
+                interface ...
+                enum ...
+                record ...
 
-                ## Complexity Comparison
+                The output MUST end with the final closing brace of the Java code.
 
-                ## Optimized Code
-
-                Code:
+                Java Code:
 
                 {{input}}
                 """;
