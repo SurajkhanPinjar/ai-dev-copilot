@@ -11,6 +11,7 @@
     </description>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
 
@@ -23,68 +24,96 @@
 
     <actions>
 
-        <action
-                id="ExplainCodeAction"
-                class="io.aidevcopilot.plugin.action.ExplainCodeAction"
-                text="Explain Code">
-            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-        </action>
+        <!-- ========================= -->
+        <!-- Editor Popup Menu -->
+        <!-- ========================= -->
 
-        <action
-                id="BugFinderAction"
-                class="io.aidevcopilot.plugin.action.BugFinderAction"
-                text="Find Bugs">
-            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-        </action>
+        <group
+                id="AiDevCopilotEditorGroup"
+                text="AI Dev Copilot"
+                popup="true">
 
-        <action
-                id="CodeReviewAction"
-                class="io.aidevcopilot.plugin.action.CodeReviewAction"
-                text="Review Code">
-            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-        </action>
+            <add-to-group
+                    group-id="EditorPopupMenu"
+                    anchor="last"/>
 
-        <action
-                id="GenerateJavaDocAction"
-                class="io.aidevcopilot.plugin.action.GenerateJavaDocAction"
-                text="Generate JavaDoc">
-            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-        </action>
+            <!-- Analysis -->
 
-        <action
-                id="GenerateTestsAction"
-                class="io.aidevcopilot.plugin.action.GenerateTestsAction"
-                text="Generate Tests">
-            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-        </action>
+            <action
+                    id="ExplainCodeAction"
+                    class="io.aidevcopilot.plugin.action.ExplainCodeAction"
+                    text="Explain Code"/>
 
-        <action
-                id="OptimizeCodeAction"
-                class="io.aidevcopilot.plugin.action.OptimizeCodeAction"
-                text="Optimize Code">
-            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-        </action>
+            <action
+                    id="CodeReviewAction"
+                    class="io.aidevcopilot.plugin.action.CodeReviewAction"
+                    text="Review Code"/>
 
-        <action
-                id="SpringAdvisorAction"
-                class="io.aidevcopilot.plugin.action.SpringAdvisorAction"
-                text="Spring Boot Advisor">
-            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-        </action>
+            <action
+                    id="BugFinderAction"
+                    class="io.aidevcopilot.plugin.action.BugFinderAction"
+                    text="Find Bugs"/>
 
-        <action
-                id="SqlExplainAction"
-                class="io.aidevcopilot.plugin.action.SqlExplainAction"
-                text="Explain SQL">
-            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-        </action>
+            <separator/>
 
-        <action
-                id="ArchitectureReviewAction"
-                class="io.aidevcopilot.plugin.action.ArchitectureReviewAction"
-                text="Architecture Review">
-            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-        </action>
+            <!-- Generation -->
+
+            <action
+                    id="OptimizeCodeAction"
+                    class="io.aidevcopilot.plugin.action.OptimizeCodeAction"
+                    text="Optimize Code"/>
+
+            <action
+                    id="GenerateTestsAction"
+                    class="io.aidevcopilot.plugin.action.GenerateTestsAction"
+                    text="Generate Tests"/>
+
+            <action
+                    id="GenerateJavaDocAction"
+                    class="io.aidevcopilot.plugin.action.GenerateJavaDocAction"
+                    text="Generate JavaDoc"/>
+
+            <separator/>
+
+            <!-- Framework -->
+
+            <action
+                    id="SpringAdvisorAction"
+                    class="io.aidevcopilot.plugin.action.SpringAdvisorAction"
+                    text="Spring Boot Advisor"/>
+
+            <action
+                    id="SqlExplainAction"
+                    class="io.aidevcopilot.plugin.action.SqlExplainAction"
+                    text="Explain SQL"/>
+
+            <action
+                    id="ArchitectureReviewAction"
+                    class="io.aidevcopilot.plugin.action.ArchitectureReviewAction"
+                    text="Architecture Review"/>
+
+        </group>
+
+        <!-- ========================= -->
+        <!-- Project Popup Menu -->
+        <!-- ========================= -->
+
+        <group
+                id="AiDevCopilotProjectGroup"
+                text="AI Dev Copilot"
+                popup="true">
+
+            <add-to-group
+                    group-id="ProjectViewPopupMenu"
+                    anchor="last"/>
+
+            <action
+                    id="AnalyzeProjectAction"
+                    class="io.aidevcopilot.plugin.action.AnalyzeProjectAction"
+                    text="Analyze Project"
+                    description="Analyze the current IntelliJ project"/>
+
+        </group>
 
     </actions>
 

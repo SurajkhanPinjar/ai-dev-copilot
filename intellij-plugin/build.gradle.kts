@@ -20,7 +20,14 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:2.20.0")
 
     intellijPlatform {
-        intellijIdeaCommunity(providers.gradleProperty("platformVersion"))
+
+        intellijIdeaCommunity(
+            providers.gradleProperty("platformVersion")
+        )
+
+        bundledPlugins(
+            "com.intellij.java"
+        )
     }
 }
 
