@@ -1,9 +1,9 @@
 package io.aidevcopilot.plugin.project.service;
 
 import com.intellij.openapi.application.ReadAction;
-import com.intellij.openapi.project.Project;
 import io.aidevcopilot.plugin.project.analyzer.ProjectAnalyzer;
 import io.aidevcopilot.plugin.project.model.ProjectAnalysisResult;
+import io.aidevcopilot.plugin.project.scope.AnalysisContext;
 
 public class ProjectAnalysisService {
 
@@ -11,21 +11,20 @@ public class ProjectAnalysisService {
             new ProjectAnalyzer();
 
     /**
-     * Analyze the IntelliJ project.
+     * Analyze the selected scope.
      */
-
     public ProjectAnalysisResult analyze(
-            Project project
+            AnalysisContext context
     ) {
 
-        if (project == null) {
+        if (context == null) {
             throw new IllegalArgumentException(
-                    "Project not found."
+                    "Analysis context not found."
             );
         }
 
         return ReadAction.compute(
-                () -> analyzer.analyze(project)
+                () -> analyzer.analyze(context)
         );
 
     }

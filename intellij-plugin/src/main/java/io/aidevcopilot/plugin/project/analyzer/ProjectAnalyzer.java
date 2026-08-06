@@ -7,6 +7,8 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiManager;
 import io.aidevcopilot.plugin.project.model.ProjectAnalysisResult;
+import io.aidevcopilot.plugin.project.scope.AnalysisContext;
+import io.aidevcopilot.plugin.project.scope.AnalysisScope;
 
 import java.util.HashSet;
 import java.util.List;
@@ -22,32 +24,88 @@ public class ProjectAnalyzer {
             );
 
     public ProjectAnalysisResult analyze(
-            Project project
+            AnalysisContext context
     ) {
 
         ProjectAnalysisResult result =
                 new ProjectAnalysisResult();
 
-        if (project == null) {
+        if (context == null) {
             return result;
         }
+
+        Project project =
+                context.getProject();
+
+        VirtualFile root =
+                context.getRoot();
+
+        AnalysisScope scope =
+                context.getScope();
+
+        if (project == null || root == null) {
+            return result;
+        }
+
+        PsiManager psiManager =
+                PsiManager.getInstance(project);
 
         Set<String> packages =
                 new HashSet<>();
 
-        PsiManager psiManager =
-                PsiManager.getInstance(project);
+        switch (scope) {
+
+            case PROJECT ->
+                    scanProject(
+                            project,
+                            psiManager,
+                            result,
+                            packages
+                    );
+
+            case MODULE,
+                 PACKAGE ->
+                    scanDirectory(
+                            psiManager,
+                            root,
+                            result,
+                            packages
+                    );
+
+            case FILE ->
+                    processFile(
+                            psiManager,
+                            root,
+                            result,
+                            packages
+                    );
+
+        }
+
+        result.getProjectStatistics()
+                .setPackages(packages.size());
+
+        return result;
+
+    }
+
+    private void scanProject(
+            Project project,
+            PsiManager psiManager,
+            ProjectAnalysisResult result,
+            Set<String> packages
+    ) {
 
         ProjectFileIndex fileIndex =
                 ProjectRootManager.getInstance(project)
                         .getFileIndex();
 
         fileIndex.iterateContent(
-                virtualFile -> {
+                file -> {
 
                     processFile(
                             psiManager,
-                            virtualFile,
+                            file,
                             result,
                             packages
                     );
@@ -56,12 +114,39 @@ public class ProjectAnalyzer {
                 }
         );
 
-        result.getProjectStatistics()
-                .setPackages(
-                        packages.size()
+    }
+
+    private void scanDirectory(
+            PsiManager psiManager,
+            VirtualFile directory,
+            ProjectAnalysisResult result,
+            Set<String> packages
+    ) {
+
+        if (directory.isDirectory()) {
+
+            for (VirtualFile child :
+                    directory.getChildren()) {
+
+                scanDirectory(
+                        psiManager,
+                        child,
+                        result,
+                        packages
                 );
 
-        return result;
+            }
+
+            return;
+
+        }
+
+        processFile(
+                psiManager,
+                directory,
+                result,
+                packages
+        );
 
     }
 

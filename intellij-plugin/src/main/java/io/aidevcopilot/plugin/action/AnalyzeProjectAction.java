@@ -2,8 +2,9 @@ package io.aidevcopilot.plugin.action;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.project.Project;
 import io.aidevcopilot.plugin.project.model.ProjectAnalysisResult;
+import io.aidevcopilot.plugin.project.scope.AnalysisContext;
+import io.aidevcopilot.plugin.project.scope.AnalysisScopeResolver;
 import io.aidevcopilot.plugin.project.service.ProjectAnalysisService;
 import io.aidevcopilot.plugin.toolwindow.ToolWindowManager;
 
@@ -14,84 +15,99 @@ public class AnalyzeProjectAction extends AnAction {
     private final ProjectAnalysisService service =
             new ProjectAnalysisService();
 
+    private final AnalysisScopeResolver resolver =
+            new AnalysisScopeResolver();
+
     @Override
     public void actionPerformed(
             AnActionEvent event
     ) {
 
-        Project project =
-                event.getProject();
+        try {
 
-        if (project == null) {
+            AnalysisContext context =
+                    resolver.resolve(event);
 
-            JOptionPane.showMessageDialog(
-                    null,
-                    "No project found.",
-                    "AI Dev Copilot",
-                    JOptionPane.ERROR_MESSAGE
-            );
+            ToolWindowManager.setTask(
+                    switch (context.getScope()) {
 
-            return;
-        }
+                        case PROJECT ->
+                                "Project : " +
+                                        context.getProject().getName();
 
-        ToolWindowManager.setTask(
-                "Project Analysis"
-        );
-
-        ToolWindowManager.setStatus(
-                "🟡 Scanning Project..."
-        );
-
-        ToolWindowManager.clearResponse();
-
-        SwingWorker<ProjectAnalysisResult, Void> worker =
-                new SwingWorker<>() {
-
-                    @Override
-                    protected ProjectAnalysisResult doInBackground() {
-
-                        return service.analyze(
-                                project
-                        );
+                        case MODULE,
+                             PACKAGE,
+                             FILE ->
+                                context.getRoot().getName();
 
                     }
+            );
 
-                    @Override
-                    protected void done() {
+            ToolWindowManager.setStatus(
+                    "🟡 Scanning Project..."
+            );
 
-                        try {
+            ToolWindowManager.clearResponse();
 
-                            ProjectAnalysisResult result =
-                                    get();
+            SwingWorker<ProjectAnalysisResult, Void> worker =
+                    new SwingWorker<>() {
 
-                            ToolWindowManager.showResponse(
-                                    result.toString()
-                            );
+                        @Override
+                        protected ProjectAnalysisResult doInBackground() {
 
-                            ToolWindowManager.setStatus(
-                                    "🟢 Scan Complete"
-                            );
-
-                        } catch (Exception ex) {
-
-                            ToolWindowManager.setStatus(
-                                    "🔴 Error"
-                            );
-
-                            JOptionPane.showMessageDialog(
-                                    null,
-                                    ex.getMessage(),
-                                    "AI Dev Copilot",
-                                    JOptionPane.ERROR_MESSAGE
+                            return service.analyze(
+                                    context
                             );
 
                         }
 
-                    }
+                        @Override
+                        protected void done() {
 
-                };
+                            try {
 
-        worker.execute();
+                                ProjectAnalysisResult result =
+                                        get();
+
+                                ToolWindowManager.showResponse(
+                                        result.toString()
+                                );
+
+                                ToolWindowManager.setStatus(
+                                        "🟢 Scan Complete"
+                                );
+
+                            } catch (Exception ex) {
+
+                                ToolWindowManager.setStatus(
+                                        "🔴 Error"
+                                );
+
+                                JOptionPane.showMessageDialog(
+                                        null,
+                                        ex.getMessage(),
+                                        "AI Dev Copilot",
+                                        JOptionPane.ERROR_MESSAGE
+                                );
+
+                            }
+
+                        }
+
+                    };
+
+            worker.execute();
+
+        } catch (Exception ex) {
+
+            JOptionPane.showMessageDialog(
+                    null,
+                    ex.getMessage(),
+                    "AI Dev Copilot",
+                    JOptionPane.ERROR_MESSAGE
+            );
+
+        }
 
     }
 
